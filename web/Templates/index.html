@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Phone Data</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style type="text/css">
+    .card-img-top {
+        width: 100%;
+        height: 15vw;
+        object-fit: cover;
+        
+    }
+    header, footer {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+}
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+}
+
+.card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+.card-img-top {
+    border-radius: 5px 5px 0 0;
+}
+.card {
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.row {
+    margin-bottom: 20px;
+}
+.btn-primary {
+    background-color: #4CAF50;
+    border-color: #4CAF50;
+}
+
+.btn-primary:hover {
+    background-color: #3e8e41;
+    border-color: #3e8e41;
+}
+
+    </style>
+</head>
+<body>
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="card mb-3">
+                    <div class="card-header">Filters</div>
+                    <div class="card-body">
+                        <form method="GET">
+                            <div class="form-group">
+                                <label for="brand">Brand:</label>
+                                <select class="form-control" id="brand" name="brand">
+                                    <option value="">All Brands</option>
+                                    {% for brand in brands %}
+                                    <option value="{{ brand.marque }}" {% if selected_brand == brand.marque %}selected{% endif %}>{{ brand.marque }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="min_price">Price Range:</label>
+                                <br>
+                                <p>minimum </p>
+                                <input type="number" class="form-control" id="minPrice" name="minPrice" min="0" max="10000" step="0.1" value="{{ selected_min_price }}">
+                                <br>
+                                <p>maximum </p>
+                                <input type="number" class="form-control" id="maxPrice" name="maxPrice" min="0" max="10000" step="0.1" value="{{ selected_max_price }}">
+                                <br>
+
+                            </div>
+                            
+                            <button type="submit" class="btn btn-primary">Filter</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-9" >
+                <div class="row">
+                    {% for item in data %}
+                    <div class="col-sm-4 mb-3">
+                        <div class="card">
+                            <img class="card-img-top" src="{{ item.image }}" alt="Card image cap">
+                            <div class="card-body">
+                                <h5 class="card-title"><a href="{{item.link}}" target="_blank">{{ item.name }}</a></h5>
+                                <p class="card-text"> {{ item.marque }}
+                                   </p>
+                                <p class="card-text " style=" font-weight: bold;">{{ item.price }} DT</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
